@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Header from '@/components/layout/Header';
@@ -12,6 +13,7 @@ import ApiIntegrationsPage from '@/components/admin/ApiIntegrationsPage';
 import MonetizationPage from '@/components/admin/MonetizationPage';
 import SeoContentPage from '@/components/admin/SeoContentPage';
 import SettingsPage from '@/components/admin/SettingsPage';
+import SocialIntegrationsPage from '@/components/admin/SocialIntegrationsPage';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
@@ -78,6 +80,7 @@ const Index = () => {
                 </div>
               )}
               {activeSection === 'seo' && <SeoContentPage />}
+              {activeSection === 'social' && <SocialIntegrationsPage />}
               {activeSection === 'monetization' && <MonetizationPage />}
               {activeSection === 'apis' && <ApiIntegrationsPage />}
               {activeSection === 'settings' && <SettingsPage />}

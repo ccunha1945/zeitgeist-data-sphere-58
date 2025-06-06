@@ -19,7 +19,8 @@ import {
   Users, 
   Globe,
   Calendar,
-  Search
+  Search,
+  Share2
 } from 'lucide-react';
 
 const menuItems = [
@@ -37,6 +38,11 @@ const menuItems = [
     title: "SEO & Conteúdo",
     url: "#seo",
     icon: Search,
+  },
+  {
+    title: "Integrações Sociais",
+    url: "#social",
+    icon: Share2,
   },
   {
     title: "Monetização",

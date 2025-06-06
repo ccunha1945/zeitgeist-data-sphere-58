@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Header from '@/components/layout/Header';
@@ -78,20 +77,10 @@ const Index = () => {
                   <TrendChart title="Visitantes" description="Análise detalhada do tráfego" />
                 </div>
               )}
-              {activeSection === 'seo' && (
-                <div className="space-y-6">
-                  <h1 className="text-3xl font-bold">SEO & Conteúdo</h1>
-                  <p className="text-muted-foreground">Ferramentas de otimização e gestão de conteúdo</p>
-                </div>
-              )}
+              {activeSection === 'seo' && <SeoContentPage />}
               {activeSection === 'monetization' && <MonetizationPage />}
               {activeSection === 'apis' && <ApiIntegrationsPage />}
-              {activeSection === 'settings' && (
-                <div className="space-y-6">
-                  <h1 className="text-3xl font-bold">Configurações</h1>
-                  <p className="text-muted-foreground">Configurações gerais do sistema</p>
-                </div>
-              )}
+              {activeSection === 'settings' && <SettingsPage />}
             </main>
           </div>
         </div>

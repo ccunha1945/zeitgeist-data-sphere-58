@@ -9,6 +9,7 @@ import AdminSidebar from '@/components/admin/AdminSidebar';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 import LoginForm from '@/components/admin/LoginForm';
 import ApiIntegrationsPage from '@/components/admin/ApiIntegrationsPage';
+import MonetizationPage from '@/components/admin/MonetizationPage';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
@@ -80,12 +81,7 @@ const Index = () => {
                   <p className="text-muted-foreground">Ferramentas de otimização e gestão de conteúdo</p>
                 </div>
               )}
-              {activeSection === 'monetization' && (
-                <div className="space-y-6">
-                  <h1 className="text-3xl font-bold">Monetização</h1>
-                  <p className="text-muted-foreground">Gestão de anúncios e receitas</p>
-                </div>
-              )}
+              {activeSection === 'monetization' && <MonetizationPage />}
               {activeSection === 'apis' && <ApiIntegrationsPage />}
               {activeSection === 'settings' && (
                 <div className="space-y-6">

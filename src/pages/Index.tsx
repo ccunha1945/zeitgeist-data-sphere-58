@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Header from '@/components/layout/Header';
@@ -9,6 +8,7 @@ import StatsCards from '@/components/analytics/StatsCards';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 import LoginForm from '@/components/admin/LoginForm';
+import ApiIntegrationsPage from '@/components/admin/ApiIntegrationsPage';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
@@ -86,12 +86,7 @@ const Index = () => {
                   <p className="text-muted-foreground">Gestão de anúncios e receitas</p>
                 </div>
               )}
-              {activeSection === 'apis' && (
-                <div className="space-y-6">
-                  <h1 className="text-3xl font-bold">APIs & Integrações</h1>
-                  <p className="text-muted-foreground">Configuração de APIs do Google e outras integrações</p>
-                </div>
-              )}
+              {activeSection === 'apis' && <ApiIntegrationsPage />}
               {activeSection === 'settings' && (
                 <div className="space-y-6">
                   <h1 className="text-3xl font-bold">Configurações</h1>

@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react';
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import TrendingSection from '@/components/trends/TrendingSection';
@@ -9,45 +11,54 @@ import TrendChart from '@/components/analytics/TrendChart';
 import StatsCards from '@/components/analytics/StatsCards';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import AdminDashboard from '@/components/admin/AdminDashboard';
-import LoginForm from '@/components/admin/LoginForm';
 import ApiIntegrationsPage from '@/components/admin/ApiIntegrationsPage';
 import MonetizationPage from '@/components/admin/MonetizationPage';
 import SeoContentPage from '@/components/admin/SeoContentPage';
 import SettingsPage from '@/components/admin/SettingsPage';
 import SocialIntegrationsPage from '@/components/admin/SocialIntegrationsPage';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, LogOut } from 'lucide-react';
 
 const Index = () => {
   const [showAdmin, setShowAdmin] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeSection, setActiveSection] = useState('dashboard');
+  const { user, signOut, isAdmin, loading } = useAuth();
+  const navigate = useNavigate();
+
+  // Mostrar loading enquanto verifica autenticação
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   const handleAdminClick = () => {
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+    
+    if (!isAdmin) {
+      return; // Usuário não é admin
+    }
+    
     setShowAdmin(true);
   };
 
   const handleBackToPublic = () => {
     setShowAdmin(false);
-    setIsLoggedIn(false);
     setActiveSection('dashboard');
   };
 
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
+  const handleLogout = async () => {
+    await signOut();
     setShowAdmin(false);
   };
 
-  // Renderizar área administrativa
-  if (showAdmin) {
-    if (!isLoggedIn) {
-      return <LoginForm onLoginSuccess={handleLoginSuccess} />;
-    }
-
+  // Renderizar área administrativa (apenas para admins autenticados)
+  if (showAdmin && user && isAdmin) {
     return (
       <SidebarProvider>
         <div className="min-h-screen flex w-full">
@@ -58,7 +69,7 @@ const Index = () => {
           />
           <div className="flex-1 flex flex-col">
             <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <div className="flex h-16 items-center px-6">
+              <div className="flex h-16 items-center px-6 justify-between">
                 <Button 
                   variant="ghost" 
                   size="sm"
@@ -68,7 +79,19 @@ const Index = () => {
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Voltar ao Site
                 </Button>
-                <h1 className="text-lg font-semibold">Painel Administrativo</h1>
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm text-muted-foreground">
+                    Olá, {user.email}
+                  </span>
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sair
+                  </Button>
+                </div>
               </div>
             </header>
             <main className="flex-1 p-6 overflow-auto">
@@ -107,9 +130,21 @@ const Index = () => {
             <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
               Acompanhe em tempo real o que está movimentando o mundo. Dados atualizados do Google Trends com análises profundas e insights valiosos.
             </p>
-            <Button size="lg" className="gradient-primary text-white text-lg px-8 py-3">
-              Explorar Tendências
-            </Button>
+            <div className="flex gap-4 justify-center">
+              <Button size="lg" className="gradient-primary text-white text-lg px-8 py-3">
+                Explorar Tendências
+              </Button>
+              {!user && (
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="text-lg px-8 py-3"
+                  onClick={() => navigate('/auth')}
+                >
+                  Criar Conta
+                </Button>
+              )}
+            </div>
           </div>
         </section>
 
@@ -148,11 +183,25 @@ const Index = () => {
               Fique sempre por dentro das tendências
             </h2>
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Receba alertas personalizados sobre as tendências que importam para você
+              {user 
+                ? 'Explore todas as funcionalidades do TrendPulse'
+                : 'Crie sua conta e receba alertas personalizados sobre as tendências que importam para você'
+              }
             </p>
-            <Button size="lg" variant="secondary" className="text-lg px-8 py-3">
-              Começar Agora
-            </Button>
+            {user ? (
+              <Button size="lg" variant="secondary" className="text-lg px-8 py-3">
+                Explorar Recursos
+              </Button>
+            ) : (
+              <Button 
+                size="lg" 
+                variant="secondary" 
+                className="text-lg px-8 py-3"
+                onClick={() => navigate('/auth')}
+              >
+                Começar Agora
+              </Button>
+            )}
           </div>
         </section>
       </main>

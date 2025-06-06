@@ -4,6 +4,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import TrendingSection from '@/components/trends/TrendingSection';
+import SocialTrendsSection from '@/components/trends/SocialTrendsSection';
 import TrendChart from '@/components/analytics/TrendChart';
 import StatsCards from '@/components/analytics/StatsCards';
 import AdminSidebar from '@/components/admin/AdminSidebar';
@@ -121,6 +122,9 @@ const Index = () => {
 
         {/* Trending Section */}
         <TrendingSection />
+
+        {/* Social Trends Section */}
+        <SocialTrendsSection />
 
         {/* Analytics Section */}
         <section className="py-16 bg-muted/30">

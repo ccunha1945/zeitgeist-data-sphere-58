@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Header from '@/components/layout/Header';
@@ -10,6 +11,8 @@ import AdminDashboard from '@/components/admin/AdminDashboard';
 import LoginForm from '@/components/admin/LoginForm';
 import ApiIntegrationsPage from '@/components/admin/ApiIntegrationsPage';
 import MonetizationPage from '@/components/admin/MonetizationPage';
+import SeoContentPage from '@/components/admin/SeoContentPage';
+import SettingsPage from '@/components/admin/SettingsPage';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
